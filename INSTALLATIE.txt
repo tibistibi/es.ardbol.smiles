@@ -1,0 +1,27 @@
+Hoymiles S-Miles Cloud — Homey-app (testversie 0.1.0)
+Zet de max. uitvoer (Exportbeheer) van Hoymiles-installaties via de S-Miles Cloud vanuit Homey-flows.
+
+Eenmalig op je computer (Windows/Mac/Linux), op HETZELFDE netwerk als de Homey:
+  1. Installeer Node.js (LTS) via https://nodejs.org
+  2. Open een terminal en installeer de Homey CLI:   npm install -g homey
+     (Mac/Linux: eventueel  sudo npm install -g homey)
+  3. Log in met het Homey-account dat eigenaar/beheerder is van de Homey:   homey login
+
+Installeren:
+  4. Pak deze zip uit en ga in de terminal naar de uitgepakte map (waar app.json staat)
+  5. Voer uit:   homey app install
+     Kies de Homey als daarom gevraagd wordt.
+
+Koppelen (in de Homey-app op je telefoon):
+  6. Apparaat toevoegen → "Hoymiles S-Miles Cloud" → S-Miles installatie
+  7. Log in met het S-Miles-account voor Homey en vink de installatie(s) aan.
+     Elke installatie (1 DTU) wordt een eigen apparaat met: vermogen, opbrengst en "Max. uitvoer".
+
+Flows (voorbeeld):
+  - Als  Elekeeper batterijniveau verandert  En  batterijniveau ≥ 80
+      Dan  <installatie>: Zet max. uitvoer op -0.1 kW
+  - Als  Elekeeper batterijniveau verandert  En  batterijniveau < 70
+      Dan  <installatie>: Zet max. uitvoer op 5 kW
+  De kaart stuurt alleen iets als de waarde verandert; de DTU bevestigt binnen ~15 s.
+
+Bij problemen: Homey-app → Instellingen → Apps → Hoymiles S-Miles Cloud → Logboek, en dat doorsturen.
