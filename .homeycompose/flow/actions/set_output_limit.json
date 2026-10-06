@@ -1,0 +1,21 @@
+{
+  "title": {
+    "en": "Set max output",
+    "nl": "Zet max. uitvoer",
+    "es": "Fijar salida máx."
+  },
+  "titleFormatted": {
+    "en": "Set max output to [[kw]] kW",
+    "nl": "Zet max. uitvoer op [[kw]] kW",
+    "es": "Fijar salida máx. a [[kw]] kW"
+  },
+  "hint": {
+    "en": "Only sends a command when the value differs from the last one set, to spare the DTU/inverter flash memory.",
+    "nl": "Stuurt alleen een commando als de waarde afwijkt van de vorige, om het flashgeheugen van DTU/omvormer te sparen.",
+    "es": "Solo envía un comando si el valor difiere del anterior, para cuidar la memoria flash de la DTU/inversor."
+  },
+  "args": [
+    { "type": "device", "name": "device", "filter": "driver_id=station" },
+    { "type": "number", "name": "kw", "min": 0, "max": 100, "step": 0.1, "placeholder": { "en": "kW" } }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "id": "es.ardbol.smiles",
+  "version": "0.1.0",
+  "compatibility": ">=12.4.0",
+  "sdk": 3,
+  "platforms": ["local"],
+  "name": { "en": "Hoymiles S-Miles Cloud" },
+  "description": {
+    "en": "Control your Hoymiles microinverters through the S-Miles Cloud — no local connection to the DTU needed.",
+    "nl": "Stuur je Hoymiles micro-omvormers aan via de S-Miles Cloud — geen lokale verbinding met de DTU nodig.",
+    "es": "Controla tus microinversores Hoymiles a través de S-Miles Cloud — sin conexión local con la DTU."
+  },
+  "category": ["energy"],
+  "permissions": [],
+  "brandColor": "#E8501C",
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": { "name": "Tibor Strausz" },
+  "contributors": {
+    "developers": [
+      { "name": "ItsRaYnor (S-Miles login, from homey-app-hoymiles-hione)" }
+    ]
+  },
+  "source": "https://github.com/tibistibi/es.ardbol.smiles",
+  "bugs": { "url": "https://github.com/tibistibi/es.ardbol.smiles/issues" },
+  "support": "https://github.com/tibistibi/es.ardbol.smiles/issues"
+}

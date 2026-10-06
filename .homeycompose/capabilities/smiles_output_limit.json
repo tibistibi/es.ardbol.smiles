@@ -1,0 +1,11 @@
+{
+  "type": "number",
+  "title": { "en": "Max output", "nl": "Max. uitvoer", "es": "Salida máx." },
+  "units": { "en": "kW" },
+  "decimals": 1,
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "icon": "/assets/limit.svg",
+  "insights": true
+}

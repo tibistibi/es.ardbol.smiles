@@ -1,0 +1,12 @@
+{
+  "name": "es.ardbol.smiles",
+  "version": "0.1.0",
+  "description": "Homey app: control Hoymiles microinverters through the S-Miles Cloud",
+  "main": "app.js",
+  "license": "MIT",
+  "author": "Tibor Strausz",
+  "repository": "github:tibistibi/es.ardbol.smiles",
+  "dependencies": {
+    "hash-wasm": "^4.12.0"
+  }
+}
