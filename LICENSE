@@ -1,9 +1,7 @@
 MIT License
 
 Copyright (c) 2026 Tibor Strausz
-Portions (S-Miles Cloud login in lib/SmilesApi.js) Copyright (c) 2025 ItsRaYnor
-(https://github.com/ItsRaYnor/homey-app-hoymiles-hione), based on
-https://github.com/Philra94/homeassistant-hoymiles-cloud (MIT).
+Copyright (c) 2025 ItsRaYnor
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
