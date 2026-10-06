@@ -29,6 +29,11 @@ class StationDevice extends Homey.Device {
       await this.setCapabilityValue('measure_power', data.power);
       await this.setCapabilityValue('meter_power.today', data.todayEnergy);
       await this.setCapabilityValue('meter_power', data.totalEnergy);
+      // Keep the shown limit in sync with S-Miles, also after a manual change in the portal
+      const exportControl = await this.api.getExportControl(this.getData().id);
+      if (exportControl?.is_control === 1 && typeof exportControl.control_value === 'number') {
+        await this.setCapabilityValue('smiles_output_limit', exportControl.control_value);
+      }
       if (!this.getAvailable()) await this.setAvailable();
     } catch (err) {
       this.error('Refresh failed:', err.message);
