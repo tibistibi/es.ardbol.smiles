@@ -8,9 +8,9 @@ no local connection between Homey and the DTU needed.
 ## Status (v0.1.0 — work in progress)
 - ✅ Login to S-Miles Cloud (v3 / Argon2id), pairing of stations
 - ✅ Station power, yield today, total yield (polled every 5 min)
-- 🧪 Flow action **"Set max output to X kW"** — sets the station's export limit (S-Miles: Settings → Export
+- ✅ Flow action **"Set max output to X kW"** — sets the station's export limit (S-Miles: Settings → Export
   management, limit mode "total") and pushes it to the DTU, waiting for the DTU's confirmation. Request sequence
-  matches a browser capture of the web portal; first live test pending. Requires export management to be
+  matches a browser capture of the web portal; tested live on a DTU-Pro-S (confirmed by the DTU in ~12 s). Requires export management to be
   switched on (with a meter) in S-Miles.
 
 ## Multiple installations
