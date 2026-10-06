@@ -19,7 +19,7 @@ installation can get its own value in a flow.
 ## Use case
 Off-grid site with a battery that is AC-coupled to Hoymiles microinverters. With the battery SOC from another
 Homey app (e.g. Elekeeper for SAJ), flows like:
-- SOC ≥ 80% → *Set max output to 0 kW*
+- SOC ≥ 80% → *Set max output to -0.1 kW* (slightly negative: guarantees no export, even briefly)
 - SOC < 70% → *Set max output to 5 kW*
 
 The action only sends a command when the value changes (spares DTU/inverter flash) and at most once per 30 s.

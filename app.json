@@ -67,9 +67,9 @@
           {
             "type": "number",
             "name": "kw",
-            "min": 0,
+            "min": -10,
             "max": 100,
-            "step": 0.1,
+            "step": 0.01,
             "placeholder": {
               "en": "kW"
             }
