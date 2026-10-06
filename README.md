@@ -8,8 +8,13 @@ no local connection between Homey and the DTU needed.
 ## Status (v0.1.0 — work in progress)
 - ✅ Login to S-Miles Cloud (v3 / Argon2id), pairing of stations
 - ✅ Station power, yield today, total yield (polled every 5 min)
-- ⏳ Flow action **"Set max output to X kW"** — card exists; the actual cloud request is being captured from
-  the web portal and will be added next.
+- 🧪 Flow action **"Set max output to X kW"** — sets the station's export limit (S-Miles: Settings → export
+  control, total limit) via `/pvm/api/0/station/reflux_control/config`. Derived from the web portal; being
+  verified against a real installation. Requires export control to be enabled (with a meter) in S-Miles.
+
+## Multiple installations
+Each S-Miles station (one DTU) becomes its own Homey device with its own action card, so every
+installation can get its own value in a flow.
 
 ## Use case
 Off-grid site with a battery that is AC-coupled to Hoymiles microinverters. With the battery SOC from another
