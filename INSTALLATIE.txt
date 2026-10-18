@@ -1,5 +1,8 @@
-Hoymiles S-Miles Cloud — Homey-app (testversie 0.1.0)
-Zet de max. uitvoer (Exportbeheer) van Hoymiles-installaties via de S-Miles Cloud vanuit Homey-flows.
+Hoymiles S-Miles Cloud — Homey-app (testversie 0.2.0)
+Zet de max. uitvoer (Exportbeheer), een vermogenslimiet in % of de omvormers aan/uit van Hoymiles-installaties
+via de S-Miles Cloud vanuit Homey-flows.
+
+Update vanaf 0.1.0: gewoon stap 4–5 opnieuw doen; gekoppelde apparaten en flows blijven bestaan.
 
 Eenmalig op je computer (Windows/Mac/Linux), op HETZELFDE netwerk als de Homey:
   1. Installeer Node.js (LTS) via https://nodejs.org
@@ -16,6 +19,7 @@ Koppelen (in de Homey-app op je telefoon):
   6. Apparaat toevoegen → "Hoymiles S-Miles Cloud" → S-Miles installatie
   7. Log in met het S-Miles-account voor Homey en vink de installatie(s) aan.
      Elke installatie (1 DTU) wordt een eigen apparaat met: vermogen, opbrengst en "Max. uitvoer".
+     Een omvormer met ingebouwde wifi (bijv. HMS-800-2WB) is in S-Miles een eigen installatie → eigen apparaat.
 
 Flows (voorbeeld):
   - Als  Elekeeper batterijniveau verandert  En  batterijniveau ≥ 80
@@ -23,5 +27,13 @@ Flows (voorbeeld):
   - Als  Elekeeper batterijniveau verandert  En  batterijniveau < 70
       Dan  <installatie>: Zet max. uitvoer op 5 kW
   De kaart stuurt alleen iets als de waarde verandert; de DTU bevestigt binnen ~15 s.
+  "Max. uitvoer (kW)" werkt alleen met DTU-Pro(-S) + meter en Exportbeheer aan.
+
+Zonder meter (bijv. HMS-800-2WB):
+  - Dan  <installatie>: Zet omvormers uit   /   Zet omvormers aan
+  - Dan  <installatie>: Zet limiet op 2 %   /   Zet limiet op 100 %   (2–100 % van het nominale vermogen)
+  Beide gelden voor alle omvormers van die installatie. De limiet wordt max. 1× per minuut en alleen bij
+  wijziging verstuurd (flashgeheugen). Aan/uit wordt alleen gestuurd als het afwijkt van wat Homey het laatst
+  stuurde; zet je hem tussendoor in de S-Miles-app om, dan weet Homey dat niet.
 
 Bij problemen: Homey-app → Instellingen → Apps → Hoymiles S-Miles Cloud → Logboek, en dat doorsturen.

@@ -1,6 +1,6 @@
 {
   "name": "es.ardbol.smiles",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Homey app: control Hoymiles microinverters through the S-Miles Cloud",
   "main": "app.js",
   "license": "MIT",

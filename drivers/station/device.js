@@ -5,12 +5,15 @@ const SmilesApi = require('../../lib/SmilesApi');
 
 const POLL_INTERVAL_MS = 5 * 60 * 1000;
 const MIN_COMMAND_INTERVAL_MS = 30 * 1000; // the DTU forwards limits wirelessly; don't flood it
+const MIN_LIMIT_INTERVAL_MS = 60 * 1000; // every %-limit write costs DTU flash + inverter EEPROM
 
 class StationDevice extends Homey.Device {
 
   async onInit() {
     this.resetApi();
     this._lastCommandAt = 0;
+    this._lastLimitAt = 0;
+    this._commandQueue = Promise.resolve();
     this._poll = this.homey.setInterval(() => this.refresh(), POLL_INTERVAL_MS);
     this.refresh();
   }
@@ -29,8 +32,10 @@ class StationDevice extends Homey.Device {
       await this.setCapabilityValue('measure_power', data.power);
       await this.setCapabilityValue('meter_power.today', data.todayEnergy);
       await this.setCapabilityValue('meter_power', data.totalEnergy);
-      // Keep the shown limit in sync with S-Miles, also after a manual change in the portal
-      const exportControl = await this.api.getExportControl(this.getData().id);
+      // Keep the shown limit in sync with S-Miles, also after a manual change in the portal. Stations
+      // without export management (no DTU-Pro/meter, e.g. an HMS-800-2WB) may refuse this: not fatal.
+      const exportControl = await this.api.getExportControl(this.getData().id)
+        .catch(err => this.log('No export control:', err.message));
       if (exportControl?.is_control === 1 && typeof exportControl.control_value === 'number') {
         await this.setCapabilityValue('smiles_output_limit', exportControl.control_value);
       }
@@ -55,6 +60,49 @@ class StationDevice extends Homey.Device {
     await this.api.setOutputLimit(this.getData().id, kw);
     await this.setCapabilityValue('smiles_output_limit', kw);
     this.log(`Max output set to ${kw} kW`);
+  }
+
+  /**
+   * Flow action: switch all micro-inverters of this station on or off. Works without DTU-Pro or meter
+   * (e.g. HMS-800-2WB). Skipped when Homey already sent the same state (a change made in the S-Miles app
+   * is not seen).
+   */
+  async setInvertersOn(on) {
+    return this._enqueue(async () => {
+      if (this.getStoreValue('inverters_on') === on) {
+        this.log(`Inverters already ${on ? 'on' : 'off'} — nothing sent`);
+        return;
+      }
+      await this.api.setInvertersOn(this.getData().id, on);
+      await this.setStoreValue('inverters_on', on);
+      this.log(`Inverters switched ${on ? 'on' : 'off'}`);
+    });
+  }
+
+  /** Flow action: set the power limit in % (2–100) of all inverters of this station. Only on change. */
+  async setPowerLimitPercent(percent) {
+    const pct = Math.round(percent);
+    return this._enqueue(async () => {
+      if (this.getStoreValue('power_limit_pct') === pct) {
+        this.log(`Power limit already ${pct} % — nothing sent`);
+        return;
+      }
+      const wait = this._lastLimitAt + MIN_LIMIT_INTERVAL_MS - Date.now();
+      if (wait > 0) throw new Error(`Too soon after the previous limit, try again in ${Math.ceil(wait / 1000)} s`);
+
+      this._lastLimitAt = Date.now();
+      await this.setStoreValue('power_limit_pct', null); // unknown until the DTU confirms
+      await this.api.setPowerLimitPercent(this.getData().id, pct);
+      await this.setStoreValue('power_limit_pct', pct);
+      this.log(`Power limit set to ${pct} %`);
+    });
+  }
+
+  // One cloud command at a time per station; the DTU handles tasks one by one
+  _enqueue(task) {
+    const run = this._commandQueue.then(task);
+    this._commandQueue = run.catch(() => {});
+    return run;
   }
 
   async onDeleted() {

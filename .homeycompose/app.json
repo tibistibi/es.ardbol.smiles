@@ -1,6 +1,6 @@
 {
   "id": "es.ardbol.smiles",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "compatibility": ">=12.4.0",
   "sdk": 3,
   "platforms": ["local"],
@@ -21,7 +21,8 @@
   "author": { "name": "Tibor Strausz" },
   "contributors": {
     "developers": [
-      { "name": "ItsRaYnor (S-Miles login, from homey-app-hoymiles-hione)" }
+      { "name": "ItsRaYnor (S-Miles login, from homey-app-hoymiles-hione)" },
+      { "name": "Eistee82 (cloud device commands, from ioBroker.hoymiles)" }
     ]
   },
   "source": "https://github.com/tibistibi/es.ardbol.smiles",

@@ -1,0 +1,21 @@
+{
+  "title": {
+    "en": "Set power limit",
+    "nl": "Zet limiet",
+    "es": "Fijar límite de potencia"
+  },
+  "titleFormatted": {
+    "en": "Set power limit to [[percent]] %",
+    "nl": "Zet limiet op [[percent]] %",
+    "es": "Fijar límite de potencia a [[percent]] %"
+  },
+  "hint": {
+    "en": "Caps the output of all micro-inverters of this installation at a percentage of their rated power (2–100 %); no meter needed. Only sends on change and at most once per minute: every limit is written to DTU/inverter flash.",
+    "nl": "Begrenst de uitvoer van alle micro-omvormers van deze installatie op een percentage van hun nominale vermogen (2–100 %); geen meter nodig. Stuurt alleen bij wijziging en max. 1× per minuut: elke limiet wordt in het flashgeheugen van DTU/omvormer geschreven.",
+    "es": "Limita la salida de todos los microinversores de esta instalación a un porcentaje de su potencia nominal (2–100 %); sin medidor. Solo envía si cambia y como máximo una vez por minuto: cada límite se escribe en la memoria flash de la DTU/inversor."
+  },
+  "args": [
+    { "type": "device", "name": "device", "filter": "driver_id=station" },
+    { "type": "number", "name": "percent", "min": 2, "max": 100, "step": 1, "placeholder": { "en": "%" } }
+  ]
+}
