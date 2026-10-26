@@ -6,6 +6,7 @@ const SmilesApi = require('../../lib/SmilesApi');
 const POLL_INTERVAL_MS = 5 * 60 * 1000;
 const MIN_COMMAND_INTERVAL_MS = 30 * 1000; // the DTU forwards limits wirelessly; don't flood it
 const MIN_LIMIT_INTERVAL_MS = 60 * 1000; // every %-limit write costs DTU flash + inverter EEPROM
+const NOT_CONNECTED = /not connected/i; // cloud answer while a cloud-only inverter (2WB) is offline, e.g. at night
 
 class StationDevice extends Homey.Device {
 
@@ -40,6 +41,7 @@ class StationDevice extends Homey.Device {
         await this.setCapabilityValue('smiles_output_limit', exportControl.control_value);
       }
       if (!this.getAvailable()) await this.setAvailable();
+      this._applyWantedState().catch(err => this.error('Pending on/off failed:', err.message));
     } catch (err) {
       this.error('Refresh failed:', err.message);
       await this.setUnavailable(err.message).catch(this.error);
@@ -65,15 +67,31 @@ class StationDevice extends Homey.Device {
   /**
    * Flow action: switch all micro-inverters of this station on or off. Works without DTU-Pro or meter
    * (e.g. HMS-800-2WB). Skipped when Homey already sent the same state (a change made in the S-Miles app
-   * is not seen).
+   * is not seen). A cloud-only 2WB is offline when its panels give no power (night): the wanted state is
+   * then kept and sent by the next refresh once it is reachable again, without failing the flow.
    */
   async setInvertersOn(on) {
+    await this.setStoreValue('inverters_wanted', on);
+    return this._applyWantedState({ fromFlow: true });
+  }
+
+  _applyWantedState({ fromFlow = false } = {}) {
     return this._enqueue(async () => {
+      const on = this.getStoreValue('inverters_wanted');
+      if (typeof on !== 'boolean') return;
       if (this.getStoreValue('inverters_on') === on) {
-        this.log(`Inverters already ${on ? 'on' : 'off'} — nothing sent`);
+        if (fromFlow) this.log(`Inverters already ${on ? 'on' : 'off'} — nothing sent`);
         return;
       }
-      await this.api.setInvertersOn(this.getData().id, on);
+      try {
+        await this.api.setInvertersOn(this.getData().id, on);
+      } catch (err) {
+        if (!fromFlow || NOT_CONNECTED.test(err.message)) {
+          this.log(`Inverters ${on ? 'on' : 'off'} pending, retry at next refresh: ${err.message}`);
+          return;
+        }
+        throw err;
+      }
       await this.setStoreValue('inverters_on', on);
       this.log(`Inverters switched ${on ? 'on' : 'off'}`);
     });

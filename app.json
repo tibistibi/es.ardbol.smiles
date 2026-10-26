@@ -57,9 +57,9 @@
           "es": "[[state]] inversores"
         },
         "hint": {
-          "en": "Switches all micro-inverters of this installation on or off via the cloud; no DTU-Pro or meter needed (e.g. HMS-800-2WB). Only sends a command when the state differs from the last one set by Homey.",
-          "nl": "Zet alle micro-omvormers van deze installatie via de cloud aan of uit; geen DTU-Pro of meter nodig (bijv. HMS-800-2WB). Stuurt alleen een commando als de stand afwijkt van de vorige die Homey zette.",
-          "es": "Enciende o apaga todos los microinversores de esta instalación a través de la nube; sin DTU-Pro ni medidor (p. ej. HMS-800-2WB). Solo envía un comando si el estado difiere del último fijado por Homey."
+          "en": "Switches all micro-inverters of this installation on or off via the cloud; no DTU-Pro or meter needed (e.g. HMS-800-2WB). Only sends a command when the state differs from the last one set by Homey. If the inverter is offline (a 2WB at night), the state is sent automatically once it is back.",
+          "nl": "Zet alle micro-omvormers van deze installatie via de cloud aan of uit; geen DTU-Pro of meter nodig (bijv. HMS-800-2WB). Stuurt alleen een commando als de stand afwijkt van de vorige die Homey zette. Is de omvormer offline (een 2WB 's nachts), dan wordt de stand vanzelf verstuurd zodra hij er weer is.",
+          "es": "Enciende o apaga todos los microinversores de esta instalación a través de la nube; sin DTU-Pro ni medidor (p. ej. HMS-800-2WB). Solo envía un comando si el estado difiere del último fijado por Homey. Si el inversor está desconectado (un 2WB de noche), el estado se envía automáticamente cuando vuelva."
         },
         "args": [
           {
@@ -139,9 +139,9 @@
           "es": "Fijar límite de potencia a [[percent]] %"
         },
         "hint": {
-          "en": "Caps the output of all micro-inverters of this installation at a percentage of their rated power (2–100 %); no meter needed. Only sends on change and at most once per minute: every limit is written to DTU/inverter flash.",
-          "nl": "Begrenst de uitvoer van alle micro-omvormers van deze installatie op een percentage van hun nominale vermogen (2–100 %); geen meter nodig. Stuurt alleen bij wijziging en max. 1× per minuut: elke limiet wordt in het flashgeheugen van DTU/omvormer geschreven.",
-          "es": "Limita la salida de todos los microinversores de esta instalación a un porcentaje de su potencia nominal (2–100 %); sin medidor. Solo envía si cambia y como máximo una vez por minuto: cada límite se escribe en la memoria flash de la DTU/inversor."
+          "en": "Only for installations with a DTU-Pro(-S); not tested yet. Does NOT work on an HMS-800-2WB (the cloud rejects it, the limit there only works locally via Bluetooth): use \"Turn inverters on/off\" instead. Caps the output of all micro-inverters at 2–100 % of their rated power; only sends on change and at most once per minute (flash memory).",
+          "nl": "Alleen voor installaties met een DTU-Pro(-S); nog niet getest. Werkt NIET bij een HMS-800-2WB (de cloud weigert het, de limiet werkt daar alleen lokaal via Bluetooth): gebruik daar \"Zet omvormers aan/uit\". Begrenst alle micro-omvormers op 2–100 % van hun nominale vermogen; stuurt alleen bij wijziging en max. 1× per minuut (flashgeheugen).",
+          "es": "Solo para instalaciones con DTU-Pro(-S); aún sin probar. NO funciona en un HMS-800-2WB (la nube lo rechaza, allí el límite solo funciona en local por Bluetooth): use \"Encender/apagar inversores\". Limita todos los microinversores al 2–100 % de su potencia nominal; solo envía si cambia y como máximo una vez por minuto (memoria flash)."
         },
         "args": [
           {

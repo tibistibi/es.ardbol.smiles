@@ -31,9 +31,12 @@ Flows (voorbeeld):
 
 Zonder meter (bijv. HMS-800-2WB):
   - Dan  <installatie>: Zet omvormers uit   /   Zet omvormers aan
-  - Dan  <installatie>: Zet limiet op 2 %   /   Zet limiet op 100 %   (2–100 % van het nominale vermogen)
-  Beide gelden voor alle omvormers van die installatie. De limiet wordt max. 1× per minuut en alleen bij
-  wijziging verstuurd (flashgeheugen). Aan/uit wordt alleen gestuurd als het afwijkt van wat Homey het laatst
-  stuurde; zet je hem tussendoor in de S-Miles-app om, dan weet Homey dat niet.
+  Voorbeeld (gat van 10 % zodat hij niet de hele dag schakelt; elke opdracht schrijft het geheugen):
+  - Als  Elekeeper batterijniveau verandert  En  batterijniveau ≥ 80   Dan  <2WB>: Zet omvormers uit
+  - Als  Elekeeper batterijniveau verandert  En  batterijniveau < 70   Dan  <2WB>: Zet omvormers aan
+  Getest 26-10-2026 op de HMS-800-2WB: bevestigd binnen ~15 s. 's Nachts is de 2WB offline; de app onthoudt
+  dan de gewenste stand en stuurt hem 's ochtends vanzelf. Aan/uit wordt alleen gestuurd als het afwijkt van
+  wat Homey het laatst stuurde; zet je hem tussendoor in de S-Miles-app om, dan weet Homey dat niet.
+  "Zet limiet op X %" werkt NIET bij de 2WB (alleen lokaal via Bluetooth) — die kaart is alleen voor DTU-Pro.
 
 Bij problemen: Homey-app → Instellingen → Apps → Hoymiles S-Miles Cloud → Logboek, en dat doorsturen.

@@ -10,18 +10,36 @@
     "es": "[[state]] inversores"
   },
   "hint": {
-    "en": "Switches all micro-inverters of this installation on or off via the cloud; no DTU-Pro or meter needed (e.g. HMS-800-2WB). Only sends a command when the state differs from the last one set by Homey.",
-    "nl": "Zet alle micro-omvormers van deze installatie via de cloud aan of uit; geen DTU-Pro of meter nodig (bijv. HMS-800-2WB). Stuurt alleen een commando als de stand afwijkt van de vorige die Homey zette.",
-    "es": "Enciende o apaga todos los microinversores de esta instalación a través de la nube; sin DTU-Pro ni medidor (p. ej. HMS-800-2WB). Solo envía un comando si el estado difiere del último fijado por Homey."
+    "en": "Switches all micro-inverters of this installation on or off via the cloud; no DTU-Pro or meter needed (e.g. HMS-800-2WB). Only sends a command when the state differs from the last one set by Homey. If the inverter is offline (a 2WB at night), the state is sent automatically once it is back.",
+    "nl": "Zet alle micro-omvormers van deze installatie via de cloud aan of uit; geen DTU-Pro of meter nodig (bijv. HMS-800-2WB). Stuurt alleen een commando als de stand afwijkt van de vorige die Homey zette. Is de omvormer offline (een 2WB 's nachts), dan wordt de stand vanzelf verstuurd zodra hij er weer is.",
+    "es": "Enciende o apaga todos los microinversores de esta instalación a través de la nube; sin DTU-Pro ni medidor (p. ej. HMS-800-2WB). Solo envía un comando si el estado difiere del último fijado por Homey. Si el inversor está desconectado (un 2WB de noche), el estado se envía automáticamente cuando vuelva."
   },
   "args": [
-    { "type": "device", "name": "device", "filter": "driver_id=station" },
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=station"
+    },
     {
       "type": "dropdown",
       "name": "state",
       "values": [
-        { "id": "on", "label": { "en": "on", "nl": "aan", "es": "Encender" } },
-        { "id": "off", "label": { "en": "off", "nl": "uit", "es": "Apagar" } }
+        {
+          "id": "on",
+          "label": {
+            "en": "on",
+            "nl": "aan",
+            "es": "Encender"
+          }
+        },
+        {
+          "id": "off",
+          "label": {
+            "en": "off",
+            "nl": "uit",
+            "es": "Apagar"
+          }
+        }
       ]
     }
   ]
