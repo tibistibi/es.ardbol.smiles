@@ -15,7 +15,8 @@ const SmilesApi = require('../lib/SmilesApi');
 async function main() {
   const { SMILES_EMAIL: email, SMILES_PASSWORD: password } = process.env;
   if (!email || !password) throw new Error('Set SMILES_EMAIL and SMILES_PASSWORD');
-  const api = new SmilesApi({ log: (...a) => console.log(...a), email, password });
+  // Cloud-only inverters (HMS-800-2WB) may only fetch commands every few minutes: wait up to 10 min here.
+  const api = new SmilesApi({ log: (...a) => console.log(...a), email, password, commandTimeoutMs: 10 * 60_000 });
   const [stationId, command, value] = process.argv.slice(2);
 
   if (!stationId) {
